@@ -182,9 +182,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // Save submission
         const allSubmissions = saveSubmission(name, email, checkedEvents);
         
-        // Automatically download updated CSV file
-        downloadCSV(allSubmissions);
-        
         // Show download button if it wasn't visible
         updateDownloadButton();
         
