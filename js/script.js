@@ -1,36 +1,7 @@
-// Main JavaScript file
+// Main JavaScript file (for index.html)
 
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
-    const burgerMenu = document.getElementById('burgerMenu');
-    const navLinks = document.getElementById('navLinks');
-    
-    // Toggle burger menu
-    burgerMenu.addEventListener('click', function() {
-        burgerMenu.classList.toggle('active');
-        navLinks.classList.toggle('active');
-    });
-    
-    // Close menu when clicking on a link
-    const links = navLinks.querySelectorAll('a');
-    links.forEach(link => {
-        link.addEventListener('click', function() {
-            burgerMenu.classList.remove('active');
-            navLinks.classList.remove('active');
-        });
-    });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', function(event) {
-        const isClickInsideNav = navLinks.contains(event.target);
-        const isClickOnBurger = burgerMenu.contains(event.target);
-        
-        if (!isClickInsideNav && !isClickOnBurger && navLinks.classList.contains('active')) {
-            burgerMenu.classList.remove('active');
-            navLinks.classList.remove('active');
-        }
-    });
-
     // Modal functionality
     const joinButton = document.getElementById('joinButton');
     const modalOverlay = document.getElementById('modalOverlay');
@@ -68,25 +39,98 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Function to get all stored submissions from localStorage
+    function getStoredSubmissions() {
+        const stored = localStorage.getItem('formSubmissions');
+        return stored ? JSON.parse(stored) : [];
+    }
+
+    // Function to save submission to localStorage
+    function saveSubmission(name, email, events) {
+        const submissions = getStoredSubmissions();
+        const newSubmission = {
+            id: Date.now(),
+            name: name,
+            email: email,
+            events: events || [],
+            timestamp: new Date().toISOString(),
+            date: new Date().toLocaleDateString(),
+            time: new Date().toLocaleTimeString()
+        };
+        submissions.push(newSubmission);
+        localStorage.setItem('formSubmissions', JSON.stringify(submissions));
+        return submissions;
+    }
+
+    // Function to convert data to CSV format
+    function convertToCSV(data) {
+        if (data.length === 0) {
+            return 'Name,Email,Events,Date,Time\n';
+        }
+
+        const headers = ['Name', 'Email', 'Events', 'Date', 'Time'];
+        const csvRows = [headers.join(',')];
+
+        data.forEach(submission => {
+            const events = submission.events && submission.events.length > 0 
+                ? submission.events.join('; ') 
+                : 'None';
+            const row = [
+                `"${submission.name}"`,
+                `"${submission.email}"`,
+                `"${events}"`,
+                `"${submission.date}"`,
+                `"${submission.time}"`
+            ];
+            csvRows.push(row.join(','));
+        });
+
+        return csvRows.join('\n');
+    }
+
+    // Function to download CSV file
+    function downloadCSV(data, filename = 'form_submissions.csv') {
+        const csv = convertToCSV(data);
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        
+        link.setAttribute('href', url);
+        link.setAttribute('download', filename);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+
     // Handle form submission
     joinForm.addEventListener('submit', function(event) {
         event.preventDefault();
         
         // Get form values
-        const name = document.getElementById('userName').value;
-        const email = document.getElementById('userEmail').value;
+        const name = document.getElementById('userName').value.trim();
+        const email = document.getElementById('userEmail').value.trim();
         const checkedEvents = Array.from(document.querySelectorAll('input[name="event"]:checked')).map(cb => cb.value);
         
-        // Validate that at least one event is selected
-        if (checkedEvents.length === 0) {
-            alert('Please select at least one event you are interested in.');
+        // Basic validation
+        if (!name || !email) {
+            alert('Please fill in all required fields.');
             return;
         }
+
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+
+        // Save submission
+        saveSubmission(name, email, checkedEvents);
         
-        // Here you can add code to send the data to a server
-        // For now, we'll just log it and show an alert
-        console.log('Form submitted:', { name, email, events: checkedEvents });
-        alert(`Thank you for joining us, ${name}! We'll be in touch soon.`);
+        console.log('Form submitted and saved:', { name, email, events: checkedEvents });
+        alert(`Thank you for joining us, ${name}! Your information has been saved.`);
         
         // Close modal after submission
         closeModal();

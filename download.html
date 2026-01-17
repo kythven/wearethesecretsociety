@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Download form submissions">
+    <title>Download - My Website</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <button class="burger-menu" id="burgerMenu" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-center">
+            <div class="download-page-content">
+                <h1>Download Submissions</h1>
+                <p>Download all form submissions as a CSV file that can be opened in Excel or Google Sheets.</p>
+                <div id="submissionCount" class="submission-count"></div>
+                <button class="download-button" id="downloadButton">Download Submissions (CSV)</button>
+                <p class="download-note">The CSV file includes: Name, Email, Events, Date, and Time columns.</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/nav.js"></script>
+    <script src="js/download.js"></script>
+</body>
+</html>
+
