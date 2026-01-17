@@ -68,25 +68,128 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Function to get all stored submissions from localStorage
+    function getStoredSubmissions() {
+        const stored = localStorage.getItem('formSubmissions');
+        return stored ? JSON.parse(stored) : [];
+    }
+
+    // Function to save submission to localStorage
+    function saveSubmission(name, email, events) {
+        const submissions = getStoredSubmissions();
+        const newSubmission = {
+            id: Date.now(),
+            name: name,
+            email: email,
+            events: events || [],
+            timestamp: new Date().toISOString(),
+            date: new Date().toLocaleDateString(),
+            time: new Date().toLocaleTimeString()
+        };
+        submissions.push(newSubmission);
+        localStorage.setItem('formSubmissions', JSON.stringify(submissions));
+        return submissions;
+    }
+
+    // Function to convert data to CSV format
+    function convertToCSV(data) {
+        if (data.length === 0) {
+            return 'Name,Email,Events,Date,Time\n';
+        }
+
+        const headers = ['Name', 'Email', 'Events', 'Date', 'Time'];
+        const csvRows = [headers.join(',')];
+
+        data.forEach(submission => {
+            const events = submission.events && submission.events.length > 0 
+                ? submission.events.join('; ') 
+                : 'None';
+            const row = [
+                `"${submission.name}"`,
+                `"${submission.email}"`,
+                `"${events}"`,
+                `"${submission.date}"`,
+                `"${submission.time}"`
+            ];
+            csvRows.push(row.join(','));
+        });
+
+        return csvRows.join('\n');
+    }
+
+    // Function to download CSV file
+    function downloadCSV(data, filename = 'form_submissions.csv') {
+        const csv = convertToCSV(data);
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        
+        link.setAttribute('href', url);
+        link.setAttribute('download', filename);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    // Download button functionality
+    const downloadButton = document.getElementById('downloadButton');
+    
+    // Show download button if there are existing submissions
+    function updateDownloadButton() {
+        const submissions = getStoredSubmissions();
+        if (submissions.length > 0) {
+            downloadButton.style.display = 'block';
+        } else {
+            downloadButton.style.display = 'none';
+        }
+    }
+
+    downloadButton.addEventListener('click', function() {
+        const submissions = getStoredSubmissions();
+        if (submissions.length === 0) {
+            alert('No submissions to download yet.');
+            return;
+        }
+        downloadCSV(submissions);
+    });
+
+    // Check for existing submissions on page load
+    updateDownloadButton();
+
     // Handle form submission
     joinForm.addEventListener('submit', function(event) {
         event.preventDefault();
         
         // Get form values
-        const name = document.getElementById('userName').value;
-        const email = document.getElementById('userEmail').value;
+        const name = document.getElementById('userName').value.trim();
+        const email = document.getElementById('userEmail').value.trim();
         const checkedEvents = Array.from(document.querySelectorAll('input[name="event"]:checked')).map(cb => cb.value);
         
-        // Validate that at least one event is selected
-        if (checkedEvents.length === 0) {
-            alert('Please select at least one event you are interested in.');
+        // Basic validation
+        if (!name || !email) {
+            alert('Please fill in all required fields.');
             return;
         }
+
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+
+        // Save submission
+        const allSubmissions = saveSubmission(name, email, checkedEvents);
         
-        // Here you can add code to send the data to a server
-        // For now, we'll just log it and show an alert
-        console.log('Form submitted:', { name, email, events: checkedEvents });
-        alert(`Thank you for joining us, ${name}! We'll be in touch soon.`);
+        // Automatically download updated CSV file
+        downloadCSV(allSubmissions);
+        
+        // Show download button if it wasn't visible
+        updateDownloadButton();
+        
+        console.log('Form submitted and saved:', { name, email, events: checkedEvents });
+        alert(`Thank you for joining us, ${name}! Your information has been saved.`);
         
         // Close modal after submission
         closeModal();
