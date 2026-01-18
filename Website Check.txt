@@ -1,0 +1,8 @@
+Customer Page DONE
+Performer Page DONE
+About Page DONE
+Customer Backend DONE
+Performer Backend DONE
+New Domain DONE
+Replace QR Code
+Shutdown or Redirect Old Site
