@@ -15,7 +15,6 @@
 }
 
 body {
-    font-family: 'Edo', sans-serif;
     line-height: 1.6;
     color: #fff;
     background-color: #000000;
@@ -121,7 +120,6 @@ nav {
     color: #fff;
     text-decoration: none;
     font-size: 1.2rem;
-    font-family: 'Edo', sans-serif;
     display: block;
     padding: 0.5rem 0;
     transition: color 0.3s ease;
@@ -152,19 +150,11 @@ section {
     min-height: 80vh;
 }
 
-.button-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-}
-
 .join-button {
     padding: 1.2rem 3rem;
     font-size: 3rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    font-family: 'Edo', sans-serif;
     font-weight: 600;
     color: #ffffff;
     background: #000000AA;
@@ -186,95 +176,22 @@ section {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
-.download-button {
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    font-family: 'Edo', sans-serif;
-    font-weight: 500;
-    color: #ffffff;
-    background: transparent;
-    border: 1px solid #ffffff;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.25s ease, color 0.25s ease, transform 0.15s ease, box-shadow 0.25s ease;
-}
-
-.download-button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-}
-
-.download-button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-}
-
-.download-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.download-button:disabled:hover {
-    background-color: transparent;
-    transform: none;
-    box-shadow: none;
-}
-
-/* Download Page Styles */
-.download-page-content {
-    text-align: center;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 2rem;
-}
-
-.download-page-content h1 {
-    margin-bottom: 1rem;
-    font-size: 2.5rem;
-}
-
-.download-page-content p {
-    margin-bottom: 1.5rem;
-    font-size: 1.1rem;
-    color: #ccc;
-}
-
-.submission-count {
-    margin: 1.5rem 0;
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: #fff;
-}
-
-.download-note {
-    margin-top: 1.5rem;
-    font-size: 0.9rem;
-    color: #888;
-    font-style: italic;
-}
-
 h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
     color: #fff;
-    font-family: 'Edo', sans-serif;
 }
 
 h2 {
     font-size: 2rem;
     margin-bottom: 1rem;
     color: #fff;
-    font-family: 'Edo', sans-serif;
 }
 
 p {
     margin-bottom: 1rem;
     font-size: 1.1rem;
     color: #ccc;
-    font-family: 'Edo', sans-serif;
 }
 
 /* Modal Styles */
@@ -359,7 +276,6 @@ p {
     margin-bottom: 1.5rem;
     color: #fff;
     font-size: 2rem;
-    font-family: 'Edo', sans-serif;
 }
 
 .form-group {
@@ -372,7 +288,6 @@ p {
     color: #fff;
     font-size: 1rem;
     font-weight: 500;
-    font-family: 'Edo', sans-serif;
 }
 
 .form-group input {
@@ -404,7 +319,6 @@ p {
     color: #fff;
     font-size: 1rem;
     font-weight: 500;
-    font-family: 'Edo', sans-serif;
 }
 
 .checkbox-group {
@@ -419,7 +333,6 @@ p {
     gap: 0.5rem;
     color: #fff;
     font-size: 1rem;
-    font-family: 'Edo', sans-serif;
     cursor: pointer;
     transition: color 0.3s ease;
 }
@@ -454,7 +367,6 @@ p {
     flex: 1;
     padding: 0.9rem 1.5rem;
     font-size: 1rem;
-    font-family: 'Edo', sans-serif;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     border-radius: 5px;
