@@ -15,7 +15,6 @@
 }
 
 body {
-    font-family: 'Edo', sans-serif;
     line-height: 1.6;
     color: #fff;
     background-color: #000000;
@@ -121,7 +120,6 @@ nav {
     color: #fff;
     text-decoration: none;
     font-size: 1.2rem;
-    font-family: 'Edo', sans-serif;
     display: block;
     padding: 0.5rem 0;
     transition: color 0.3s ease;
@@ -152,19 +150,11 @@ section {
     min-height: 80vh;
 }
 
-.button-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-}
-
 .join-button {
     padding: 1.2rem 3rem;
     font-size: 3rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    font-family: 'Edo', sans-serif;
     font-weight: 600;
     color: #ffffff;
     background: #000000AA;
@@ -186,95 +176,22 @@ section {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
-.download-button {
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    font-family: 'Edo', sans-serif;
-    font-weight: 500;
-    color: #ffffff;
-    background: transparent;
-    border: 1px solid #ffffff;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.25s ease, color 0.25s ease, transform 0.15s ease, box-shadow 0.25s ease;
-}
-
-.download-button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-}
-
-.download-button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-}
-
-.download-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.download-button:disabled:hover {
-    background-color: transparent;
-    transform: none;
-    box-shadow: none;
-}
-
-/* Download Page Styles */
-.download-page-content {
-    text-align: center;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 2rem;
-}
-
-.download-page-content h1 {
-    margin-bottom: 1rem;
-    font-size: 2.5rem;
-}
-
-.download-page-content p {
-    margin-bottom: 1.5rem;
-    font-size: 1.1rem;
-    color: #ccc;
-}
-
-.submission-count {
-    margin: 1.5rem 0;
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: #fff;
-}
-
-.download-note {
-    margin-top: 1.5rem;
-    font-size: 0.9rem;
-    color: #888;
-    font-style: italic;
-}
-
 h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
     color: #fff;
-    font-family: 'Edo', sans-serif;
 }
 
 h2 {
     font-size: 2rem;
     margin-bottom: 1rem;
     color: #fff;
-    font-family: 'Edo', sans-serif;
 }
 
 p {
     margin-bottom: 1rem;
     font-size: 1.1rem;
     color: #ccc;
-    font-family: 'Edo', sans-serif;
 }
 
 /* Modal Styles */
@@ -359,7 +276,6 @@ p {
     margin-bottom: 1.5rem;
     color: #fff;
     font-size: 2rem;
-    font-family: 'Edo', sans-serif;
 }
 
 .form-group {
@@ -372,10 +288,10 @@ p {
     color: #fff;
     font-size: 1rem;
     font-weight: 500;
-    font-family: 'Edo', sans-serif;
 }
 
-.form-group input {
+.form-group input,
+.form-group select {
     width: 100%;
     padding: 0.75rem;
     font-size: 1rem;
@@ -387,7 +303,8 @@ p {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.form-group input:focus {
+.form-group input:focus,
+.form-group select:focus {
     outline: none;
     border-color: #fff;
     box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
@@ -397,6 +314,24 @@ p {
     color: #888;
 }
 
+/* Dropdown/Select Styling */
+.form-group select {
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    padding-right: 2.5rem;
+}
+
+.form-group select option {
+    background-color: #2a2a2a;
+    color: #fff;
+    padding: 0.5rem;
+}
+
 /* Checkbox Group Styling */
 .form-group-title {
     display: block;
@@ -404,7 +339,6 @@ p {
     color: #fff;
     font-size: 1rem;
     font-weight: 500;
-    font-family: 'Edo', sans-serif;
 }
 
 .checkbox-group {
@@ -419,7 +353,6 @@ p {
     gap: 0.5rem;
     color: #fff;
     font-size: 1rem;
-    font-family: 'Edo', sans-serif;
     cursor: pointer;
     transition: color 0.3s ease;
 }
@@ -454,7 +387,6 @@ p {
     flex: 1;
     padding: 0.9rem 1.5rem;
     font-size: 1rem;
-    font-family: 'Edo', sans-serif;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     border-radius: 5px;
@@ -493,6 +425,55 @@ p {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
+/* About Page Styles */
+.about-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 5rem);
+    padding: 2rem;
+}
+
+.about-content {
+    max-width: 800px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 3rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.about-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.about-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #ccc;
+    margin-bottom: 1.5rem;
+}
+
+.about-content .about-intro {
+    font-size: 1.3rem;
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: 2rem;
+}
+
+.about-content .about-closing {
+    font-size: 1.4rem;
+    color: #fff;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 0;
+    font-style: italic;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     nav {
@@ -527,6 +508,26 @@ p {
     .submit-button,
     .cancel-button {
         width: 100%;
+    }
+
+    .about-content {
+        padding: 2rem;
+    }
+
+    .about-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .about-content p {
+        font-size: 1rem;
+    }
+
+    .about-content .about-intro {
+        font-size: 1.1rem;
+    }
+
+    .about-content .about-closing {
+        font-size: 1.2rem;
     }
 }
 

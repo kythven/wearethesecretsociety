@@ -39,71 +39,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Function to get all stored submissions from localStorage
-    function getStoredSubmissions() {
-        const stored = localStorage.getItem('formSubmissions');
-        return stored ? JSON.parse(stored) : [];
-    }
-
-    // Function to save submission to localStorage
-    function saveSubmission(name, email, events) {
-        const submissions = getStoredSubmissions();
-        const newSubmission = {
-            id: Date.now(),
-            name: name,
-            email: email,
-            events: events || [],
-            timestamp: new Date().toISOString(),
-            date: new Date().toLocaleDateString(),
-            time: new Date().toLocaleTimeString()
-        };
-        submissions.push(newSubmission);
-        localStorage.setItem('formSubmissions', JSON.stringify(submissions));
-        return submissions;
-    }
-
-    // Function to convert data to CSV format
-    function convertToCSV(data) {
-        if (data.length === 0) {
-            return 'Name,Email,Events,Date,Time\n';
-        }
-
-        const headers = ['Name', 'Email', 'Events', 'Date', 'Time'];
-        const csvRows = [headers.join(',')];
-
-        data.forEach(submission => {
-            const events = submission.events && submission.events.length > 0 
-                ? submission.events.join('; ') 
-                : 'None';
-            const row = [
-                `"${submission.name}"`,
-                `"${submission.email}"`,
-                `"${events}"`,
-                `"${submission.date}"`,
-                `"${submission.time}"`
-            ];
-            csvRows.push(row.join(','));
-        });
-
-        return csvRows.join('\n');
-    }
-
-    // Function to download CSV file
-    function downloadCSV(data, filename = 'form_submissions.csv') {
-        const csv = convertToCSV(data);
-        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement('a');
-        const url = URL.createObjectURL(blob);
-        
-        link.setAttribute('href', url);
-        link.setAttribute('download', filename);
-        link.style.visibility = 'hidden';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
-
-
     // Handle form submission
     joinForm.addEventListener('submit', function(event) {
         event.preventDefault();
@@ -111,7 +46,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get form values
         const name = document.getElementById('userName').value.trim();
         const email = document.getElementById('userEmail').value.trim();
-        const checkedEvents = Array.from(document.querySelectorAll('input[name="event"]:checked')).map(cb => cb.value);
         
         // Basic validation
         if (!name || !email) {
@@ -126,14 +60,38 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Save submission
-        saveSubmission(name, email, checkedEvents);
+        // Get the Formspree URL from the form action
+        const formAction = joinForm.getAttribute('action');
         
-        console.log('Form submitted and saved:', { name, email, events: checkedEvents });
-        alert(`Thank you for joining us, ${name}! Your information has been saved.`);
+        // Submit to Formspree
+        console.log('Submitting to:', formAction);
         
-        // Close modal after submission
-        closeModal();
+        fetch(formAction, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json' },
+            body: new FormData(joinForm)
+        })
+        .then(response => {
+            console.log('Response status:', response.status);
+            if (response.ok) {
+                console.log('Form submitted to Formspree:', { name, email });
+                alert(`Thank you for joining us, ${name}! Your information has been saved.`);
+                closeModal();
+            } else {
+                return response.json().then(data => {
+                    throw new Error(data.error || 'Form submission failed');
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Check if running from file://
+            if (window.location.protocol === 'file:') {
+                alert('Error: Cannot submit from file://. Please run a local server.\n\nRun: python -m http.server 8000\nThen open: http://localhost:8000');
+            } else {
+                alert('There was an error submitting the form. Please try again.\n\nError: ' + error.message);
+            }
+        });
     });
 });
 

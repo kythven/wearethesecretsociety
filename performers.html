@@ -26,7 +26,7 @@
 
     <main>
         <section class="hero-center">
-            <button class="join-button" id="joinButton">JOIN US</button>
+            <button class="join-button" id="joinButton">Become a Performer</button>
         </section>
     </main>
 
@@ -35,7 +35,7 @@
         <div class="modal-content">
             <button class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
             <h2>Join Us</h2>
-            <form action="https://formspree.io/f/xeeeawwp" method="POST" id="joinForm">
+            <form action="https://formspree.io/f/mnjjpkqa" method="POST" id="joinForm">
                 <div class="form-group">
                     <label for="userName">Name</label>
                     <input type="text" id="userName" name="name" required>
@@ -43,6 +43,30 @@
                 <div class="form-group">
                     <label for="userEmail">Email</label>
                     <input type="email" id="userEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="userOccupation">Occupation</label>
+                    <select id="userOccupation" name="occupation" required>
+                        <option value="">Select occupation...</option>
+                        <option value="artist">Artist</option>
+                        <option value="dj">DJ</option>
+                        <option value="musician">Musician</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="userGenre">Genre</label>
+                    <select id="userGenre" name="genre" required>
+                        <option value="">Select genre...</option>
+                        <option value="house">House</option>
+                        <option value="garage">Garage</option>
+                        <option value="dnb">Drum and Bass</option>
+                        <option value="dubstep">Dubstep</option>
+                        <option value="electro">Electro</option>
+                        <option value="techno">Techno</option>
+                        <option value="trance">Trance</option>
+                        <option value="other">Other</option>
+                    </select>
                 </div>
                 <!--
                 <div class="form-group">
@@ -60,10 +84,9 @@
                 </div>
                 -->
                 <div class="form-actions">
-                    <button type="submit" class="submit-button">Join us</button>
+                    <button type="submit" class="submit-button">Join Us</button>
                     <button type="button" class="cancel-button" id="cancelButton">Cancel</button>
                 </div>
-                
             </form>
         </div>
     </div>
